@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=netstandard">
+
+    <system:String x:Key="Name" >نام سفارش دهنده</system:String>
+    <system:String x:Key="Comments" >توضیحات</system:String>
+    <system:String x:Key="OrderNo" >شماره پذیرش</system:String>
+    <system:String x:Key="Day" >روز</system:String>
+    <system:String x:Key="Month" >ماه</system:String>
+    <system:String x:Key="Year" >سال</system:String>
+    <system:String x:Key="Add" >ثبت</system:String>
+    <system:String x:Key="Title" >ثبت سفارش</system:String>
+
+</ResourceDictionary>
