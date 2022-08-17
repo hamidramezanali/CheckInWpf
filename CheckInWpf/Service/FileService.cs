@@ -8,66 +8,36 @@ using System.Windows;
 
 namespace CheckInWpf.Service
 {
-    internal class FileService
+    internal class FileService : IFileService
     {
-        public static string LatestFileName = "Latest.json";
-        public static string OrdersFileName = "Orders.txt";
-        public static string AppDataDirectory = "Checkin";
-        internal static T Read<T>()
+        private readonly string LatestFileName = "Latest.json";
+        private readonly string AppDataDirectory = "Checkin";
+        private string LatestFilePath => Path.Combine(ApplicationPath, LatestFileName);
+        private string ApplicationPath =>
+             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AppDataDirectory);
+
+
+
+        public T Read<T>()
         {
-            string path = GetLatestFilePath();
-            using (StreamReader r = new StreamReader(path))
+            using (StreamReader r = new StreamReader(LatestFilePath))
             {
                 string json = r.ReadToEnd();
                 return JsonConvert.DeserializeObject<T>(json);
             }
         }
 
-        internal static void Write(Latest latest)
+        public void Write<T>(T toBeSerialized)
         {
-            string path = GetLatestFilePath();
-            var json = JsonConvert.SerializeObject(latest);
-            System.IO.File.WriteAllText(path, json);
+            var json = JsonConvert.SerializeObject(toBeSerialized);
+            System.IO.File.WriteAllText(LatestFilePath, json);
 
         }
 
-        internal static List<string> ReadOrders()
-        {
-            string path = GetOrdersFilePath();
-            if (!File.Exists(path))
-            {
-                using (StreamWriter w = File.AppendText(path)) ;
-            }
-            var result = File.ReadAllLines(path);
-            return result.ToList();
 
-        }
-
-        internal static void WriteOrders(List<string> orders)
+        private void WriteInitializer(string latestFullPathWithName)
         {
-
-            string path = GetOrdersFilePath();
-            File.WriteAllLines(path, orders);
-
-        }
-        private static string GetOrdersFilePath()
-        {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AppDataDirectory, OrdersFileName);
-        }
-        private static string GetLatestFilePath()
-        {
-            string AppDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AppDataDirectory);
-            string LatestFullPathWithName = Path.Combine(@AppDataPath, LatestFileName);
-            if (!Directory.Exists(AppDataPath))
-                Directory.CreateDirectory(AppDataPath);
-            if (!File.Exists(LatestFullPathWithName))
-                WriteInitializer(LatestFullPathWithName);
-            return LatestFullPathWithName;
-        }
-
-        private static void WriteInitializer(string latestFullPathWithName)
-        {
-            Latest t =  new Latest()
+            Latest t = new Latest()
             {
                 Id = 0,
                 DateTime = DateTime.Now.ToShortDateString()
@@ -78,6 +48,16 @@ namespace CheckInWpf.Service
 
                 w.Write(s);
             };
+        }
+
+
+        public void InitializeFiles()
+        {
+            if (!Directory.Exists(ApplicationPath))
+                Directory.CreateDirectory(ApplicationPath);
+
+            if (!File.Exists(LatestFilePath))
+                WriteInitializer(LatestFilePath);
         }
     }
 }

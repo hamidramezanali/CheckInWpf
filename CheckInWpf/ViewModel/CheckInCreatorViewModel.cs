@@ -3,38 +3,18 @@ using CheckInWpf.Service;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace CheckInWpf.ViewModel
 {
-    internal class CheckInViewModel : ViewModelBase
+    public class CheckInCreatorViewModel : ViewModelBase
 
     {
-        private DateTime _FromDate;
-
-        public DateTime FromDate
-        {
-            get { return _FromDate; }
-            set { _FromDate = value; RaisePropertyChanged(); }
-        }
-        private DateTime _ToDate;
-
-        public DateTime ToDate
-        {
-            get { return _ToDate; }
-            set { _ToDate = value; RaisePropertyChanged(); }
-        }
-
-
-        private ObservableCollection<CheckIn> _Orders;
-
-        public ObservableCollection<CheckIn> Orders
-        {
-            get { return _Orders; }
-            set { _Orders = value; RaisePropertyChanged(); }
-        }
 
         private string _Name;
 
@@ -75,6 +55,7 @@ namespace CheckInWpf.ViewModel
 
 
         private string _Year;
+     
 
         public string Year
         {
@@ -84,20 +65,19 @@ namespace CheckInWpf.ViewModel
 
 
         public RelayCommand AddCommand { get; set; }
-        private OrderNumberService _orderNumberService { get; }
-        private OrderServices _orderServices { get; }
+        private IOrderNumberService _orderNumberService { get; }
+        private CheckInService _orderServices { get; }
 
 
-
-        public CheckInViewModel()
+        public CheckInCreatorViewModel(IOrderNumberService orderNumberService)
         {
-            AddCommand = new RelayCommand(OnAdd);
-            _orderNumberService = new OrderNumberService();
-            _orderServices = new OrderServices();
-            Init();
+       
+            AddCommand = new RelayCommand(Add);
+            _orderNumberService = orderNumberService;
+            Initialize();
+         
         }
-
-        private void Init()
+        private void Initialize()
         {
             DateTime thisDate = DateTime.Now;
             PersianCalendar pc = new PersianCalendar();
@@ -108,12 +88,10 @@ namespace CheckInWpf.ViewModel
             Month = pc.GetMonth(thisDate).ToString();
             Year = pc.GetYear(thisDate).ToString();
             OrderNo = _orderNumberService.GetOrderNumber().ToString();
-            Orders = _orderServices.GetAllOrders();
-
 
         }
 
-        private void OnAdd()
+        private void Add()
         {
             if (string.IsNullOrEmpty(Name))
             {
@@ -121,9 +99,9 @@ namespace CheckInWpf.ViewModel
                 return;
             }
             _orderNumberService.SetOrderNumber(Convert.ToInt32(_OrderNo));
-            Orders.Add(NewOrderMapper());
-            _orderServices.SaveAllOrders(Orders);
-            Init();
+
+            _orderServices.AddOrder(NewOrderMapper());
+        
         }
 
         private CheckIn NewOrderMapper()

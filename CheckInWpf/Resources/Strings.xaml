@@ -9,5 +9,7 @@
     <system:String x:Key="Year" >سال</system:String>
     <system:String x:Key="Add" >ثبت</system:String>
     <system:String x:Key="Title" >ثبت سفارش</system:String>
+    <system:String x:Key="MakeNewOrder" >ثبت سفارش جدید</system:String>
+    
 
 </ResourceDictionary>

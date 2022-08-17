@@ -7,15 +7,24 @@ using System.Threading.Tasks;
 
 namespace CheckInWpf.Soters
 {
-    internal class NavigationStore
+    public class NavigationStore
     {
         private ViewModelBase _CurrentViewModel;
 
         public ViewModelBase CurrentViewModel
         {
             get { return _CurrentViewModel; }
-            set { _CurrentViewModel = value; }
+            set { _CurrentViewModel = value;
+                OnCurrentViewModelChanged();
+            }
         }
+
+        private void OnCurrentViewModelChanged()
+        {
+            CurrentViewModelChanged?.Invoke();
+        }
+
+        public event Action CurrentViewModelChanged;
 
     }
 }

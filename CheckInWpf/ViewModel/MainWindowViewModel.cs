@@ -15,14 +15,16 @@ namespace CheckInWpf.ViewModel
     {
         private readonly NavigationStore _navigataionStore;
         public ViewModelBase CurrentViewModel => _navigataionStore.CurrentViewModel;
-    
-        private SQLiteService _sQLiteService { get; }
+
         public MainWindowViewModel(NavigationStore navigationStore)
         {
             _navigataionStore = navigationStore;
-            _sQLiteService = new SQLiteService();
-        
+            _navigataionStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
         }
 
+        private void OnCurrentViewModelChanged()
+        {
+           RaisePropertyChanged(nameof(CurrentViewModel));
+        }
     }
 }

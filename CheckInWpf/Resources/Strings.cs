@@ -16,5 +16,6 @@ namespace CheckInWpf
         public const string Year = "سال";
         public const string Add = "ثبت";
         public const string Title = "ثبت سفارش";
+        public const string MakeNewOrder ="ثبت سفارش جدید";
     }
 }

@@ -17,7 +17,7 @@
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="Height" Value="30"/>
         </Style>
-        <DataTemplate DataType="{x:Type vms:CheckInViewModel}">
+        <DataTemplate DataType="{x:Type vms:CheckInCreatorViewModel}">
             <views:CheckInView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vms:CheckedInListViewModel}">

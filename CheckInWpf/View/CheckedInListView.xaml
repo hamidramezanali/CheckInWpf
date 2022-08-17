@@ -7,6 +7,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30px"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Button Height="30" Background="Green" Content="{StaticResource MakeNewOrder }" Command="{Binding CreateOrderCommand }"/>
         <DataGrid IsReadOnly="True"  Grid.Row="1" ItemsSource="{Binding Orders}" AutoGenerateColumns="True" Grid.ColumnSpan="2"/>
     </Grid>
 </UserControl>

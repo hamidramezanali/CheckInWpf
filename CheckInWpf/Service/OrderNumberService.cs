@@ -7,19 +7,26 @@ using System.Threading.Tasks;
 
 namespace CheckInWpf.Service
 {
-    internal class OrderNumberService
+    internal class OrderNumberService : IOrderNumberService
     {
+        private readonly IFileService _fileService;
+        public OrderNumberService(IFileService fileService)
+        {
+            _fileService = fileService;
+        }
+
+
         public int GetOrderNumber()
         {
-           var latest= FileService.Read<Latest>();
+            var latest = _fileService.Read<Latest>();
             var date = DateTime.Today.ToShortDateString();
             if (latest.DateTime == date)
-                return latest.Id+1;
+                return latest.Id + 1;
             else return 1;
         }
         public void SetOrderNumber(int orderNo)
         {
-            FileService.Write(new Latest() { Id = orderNo, DateTime = DateTime.Today.ToShortDateString() });
+            _fileService.Write(new Latest() { Id = orderNo, DateTime = DateTime.Today.ToShortDateString() });
         }
 
     }
