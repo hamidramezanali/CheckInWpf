@@ -1,4 +1,5 @@
-﻿using CheckInWpf.Model;
+﻿using CheckInWpf.Extensions;
+using CheckInWpf.Model;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
@@ -83,17 +84,23 @@ namespace CheckInWpf.Service
         public IEnumerable<CheckIn> GetAllOrders()
         {
             command.CommandText= @$"SELECT * FROM {TableName}" ;  
-
+            List<CheckIn> checkIns=new List<CheckIn>();
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    var name = reader.;
-
-                    
+                    var checkin=new CheckIn();
+                    checkin.Name = reader["Name"].ToString();
+                    checkin.Comments = reader["Comments"].ToString();
+                    checkin.OrderNo =Convert.ToInt32( reader["OrderNo"].ToString());
+                    checkin.Day = reader["Day"].ToString();
+                    checkin.Month = reader["Month"].ToString();
+                    checkin.Year = reader["Year"].ToString();
+                    checkin.Status = reader["Status"].ToString().ToStatus();
+                  checkIns.Add(checkin);
                 }
             }
-            return new List<CheckIn>();
+            return checkIns;
 
         }
 
