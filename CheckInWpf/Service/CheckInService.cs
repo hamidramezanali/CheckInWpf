@@ -42,7 +42,7 @@ namespace CheckInWpf.ViewModel
 
         public void AddOrder(CheckIn checkIn)
         {
-            throw new NotImplementedException();
+           _dbService.AddOrder(checkIn);
         }
         public void UpdateOrder(CheckIn checkIn)
         {

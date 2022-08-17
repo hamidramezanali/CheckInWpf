@@ -43,7 +43,9 @@ namespace CheckInWpf.ViewModel
         {
             _checkInService = checkInService;
             CreateOrderCommand = new NavigateCommand(navigationStore,createViewModel);
-          
+            LoadOrders();
+
+
         }
 
         public void LoadOrders()

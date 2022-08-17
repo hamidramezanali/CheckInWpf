@@ -9,7 +9,7 @@ namespace CheckInWpf.Service
     {
         public static string OrdersFileName = "Orders.db";
         public static string AppDataDirectory = "Checkin";
-
+        public static string TableName = "CHECK_IN";
 
         SqliteConnection dbConnection;
         SqliteCommand command;
@@ -71,7 +71,7 @@ namespace CheckInWpf.Service
 
         public bool checkIfTableContainsData(string tableName)
         {
-            command.CommandText = "SELECT count(*) FROM " + tableName;
+            command.CommandText = @$"SELECT count(*) FROM  {TableName} ";
             var result = command.ExecuteScalar();
 
             return Convert.ToInt32(result) > 0 ? true : false;
@@ -82,7 +82,19 @@ namespace CheckInWpf.Service
 
         public IEnumerable<CheckIn> GetAllOrders()
         {
-            throw new NotImplementedException();
+            command.CommandText= @$"SELECT * FROM {TableName}" ;  
+
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var name = reader.;
+
+                    
+                }
+            }
+            return new List<CheckIn>();
+
         }
 
         public void UpdateOrder(CheckIn order)
@@ -92,12 +104,11 @@ namespace CheckInWpf.Service
 
         public void AddOrder(CheckIn order)
         {
-            if (!checkIfTableContainsData("CHECK_IN"))
-            {
-                sqlCommand = @$"insert into CHECK_IN (Name ,Comments ,OrderNo ,Day , Month , Year ,Status) values (
-                             {order.Name},{order.Comments},{order.OrderNo},{order.Day},{order.Month},{order.Year},{order.Status})";
+
+                sqlCommand = @$"insert into {TableName} (Name ,Comments ,OrderNo ,Day , Month , Year ,Status) values (
+                             ""{ order.Name}"",""{@order.Comments}"",{@order.OrderNo},""{@order.Day}"",""{@order.Month}"",""{@order.Year}"",""{@order.Status}"")";
                 executeQuery(sqlCommand);
-            }
+            
         }
     }
 
