@@ -1,6 +1,7 @@
 ﻿using CheckInWpf.Service;
 using CheckInWpf.Soters;
 using CheckInWpf.ViewModel;
+using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +13,15 @@ namespace CheckInWpf.Commands
     public class NavigateCommand : CommandBase
     {
         private readonly NavigationStore _navigationStore;
-        public NavigateCommand(NavigationStore navigationStore)
+        private readonly Func<ViewModelBase> _createViewModel;
+        public NavigateCommand(NavigationStore navigationStore,Func<ViewModelBase> createViewModel)
         {
             _navigationStore = navigationStore;
+            _createViewModel = createViewModel;
         }
         public override void Execute(object? parameter)
         {
-            _navigationStore.CurrentViewModel =new  CheckInCreatorViewModel(new OrderNumberService(new FileService()));
+            _navigationStore.CurrentViewModel = _createViewModel();
         }
     }
 }

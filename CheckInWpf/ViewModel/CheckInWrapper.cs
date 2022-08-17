@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace CheckInWpf.ViewModel
 {
-    internal class CheckInWrapper : ViewModelBase
+    public class CheckInWrapper : ViewModelBase
 
     {
         private readonly CheckIn _checkIn;

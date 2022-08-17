@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CheckInWpf.Service
 {
-    internal interface IDbService
+    public interface IDbService
     {
         bool checkIfExist(string tableName);
         bool checkIfTableContainsData(string tableName);

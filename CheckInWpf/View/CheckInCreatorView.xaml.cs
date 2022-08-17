@@ -18,9 +18,9 @@ namespace CheckInWpf.View
     /// <summary>
     /// Interaction logic for CheckInView.xaml
     /// </summary>
-    public partial class CheckInView : UserControl
+    public partial class CheckInCreatorView : UserControl
     {
-        public CheckInView()
+        public CheckInCreatorView()
         {
             InitializeComponent();
         }

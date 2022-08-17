@@ -18,7 +18,7 @@
             <Setter Property="Height" Value="30"/>
         </Style>
         <DataTemplate DataType="{x:Type vms:CheckInCreatorViewModel}">
-            <views:CheckInView/>
+            <views:CheckInCreatorView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vms:CheckedInListViewModel}">
             <views:CheckedInListView/>

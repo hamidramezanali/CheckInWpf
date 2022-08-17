@@ -1,5 +1,7 @@
-﻿using CheckInWpf.Model;
+﻿using CheckInWpf.Commands;
+using CheckInWpf.Model;
 using CheckInWpf.Service;
+using CheckInWpf.Soters;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
@@ -65,18 +67,25 @@ namespace CheckInWpf.ViewModel
 
 
         public RelayCommand AddCommand { get; set; }
+        public NavigateCommand CancelCommand { get; set; }
+        
         private IOrderNumberService _orderNumberService { get; }
-        private CheckInService _orderServices { get; }
+        private ICheckInService _checkInService { get; }
 
 
-        public CheckInCreatorViewModel(IOrderNumberService orderNumberService)
+        public CheckInCreatorViewModel(IOrderNumberService orderNumberService,ICheckInService checkInService,NavigationStore navigationStore, Func<ViewModelBase> createViewModel)
         {
        
             AddCommand = new RelayCommand(Add);
+            CancelCommand = new NavigateCommand(navigationStore,createViewModel);
+            _checkInService = checkInService;
             _orderNumberService = orderNumberService;
             Initialize();
          
         }
+
+
+
         private void Initialize()
         {
             DateTime thisDate = DateTime.Now;
@@ -100,7 +109,7 @@ namespace CheckInWpf.ViewModel
             }
             _orderNumberService.SetOrderNumber(Convert.ToInt32(_OrderNo));
 
-            _orderServices.AddOrder(NewOrderMapper());
+            _checkInService.AddOrder(NewOrderMapper());
         
         }
 

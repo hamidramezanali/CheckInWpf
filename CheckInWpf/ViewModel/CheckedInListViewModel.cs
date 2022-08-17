@@ -39,10 +39,10 @@ namespace CheckInWpf.ViewModel
         private ICheckInService _checkInService { get; }
 
         public NavigateCommand CreateOrderCommand { get; set; }
-        public CheckedInListViewModel(ICheckInService checkInService,NavigationStore navigationStore)
+        public CheckedInListViewModel(ICheckInService checkInService,NavigationStore navigationStore, Func<ViewModelBase> createViewModel)
         {
             _checkInService = checkInService;
-            CreateOrderCommand = new NavigateCommand(navigationStore);
+            CreateOrderCommand = new NavigateCommand(navigationStore,createViewModel);
           
         }
 

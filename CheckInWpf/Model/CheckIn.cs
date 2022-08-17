@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CheckInWpf.Model
 {
-    internal class CheckIn
+    public class CheckIn
     {
         public CheckIn()
         {

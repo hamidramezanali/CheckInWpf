@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 
 namespace CheckInWpf.ViewModel
 {
-    internal class CheckInService : ICheckInService
+    public class CheckInService : ICheckInService
     {
         private readonly IDbService _dbService;
         public CheckInService(IDbService dbService)

@@ -4,10 +4,10 @@ using System.Collections.ObjectModel;
 
 namespace CheckInWpf.ViewModel
 {
-    internal interface ICheckInService
+    public interface ICheckInService
     {
-        void AddOrder(CheckIn checkIn);
-        ObservableCollection<CheckInWrapper> GetAllOrders();
-        void UpdateOrder(CheckIn checkIn);
+       void AddOrder(CheckIn checkIn);
+       ObservableCollection<CheckInWrapper> GetAllOrders();
+       void UpdateOrder(CheckIn checkIn);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CheckInWpf.Service;
 using CheckInWpf.Soters;
 using CheckInWpf.ViewModel;
+using GalaSoft.MvvmLight;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -20,6 +21,11 @@ namespace CheckInWpf
     /// </summary>
     public partial class App : Application
     {
+        private  IFileService fileService;
+        private  IDbService dbService;
+        private  ICheckInService checkInService;
+        private IOrderNumberService orderNumberService;
+        private  NavigationStore navigationStore;
 
         public App()
         {
@@ -31,20 +37,34 @@ namespace CheckInWpf
             var host = Host.CreateDefaultBuilder()
     .ConfigureServices(ConfigureServices)
     .Build();
-            IFileService fileService=host.Services.GetRequiredService<IFileService>();
-            IDbService dbService = host.Services.GetRequiredService<IDbService>();       
-            ICheckInService checkInService = host.Services.GetRequiredService<ICheckInService>();
-            NavigationStore navigationStore = host.Services.GetRequiredService<NavigationStore>();
+             fileService=host.Services.GetRequiredService<IFileService>();
+             dbService = host.Services.GetRequiredService<IDbService>();       
+             checkInService = host.Services.GetRequiredService<ICheckInService>();
+            orderNumberService= host.Services.GetRequiredService<IOrderNumberService>();
+             navigationStore = host.Services.GetRequiredService<NavigationStore>();
 
             fileService.InitializeFiles();
             dbService.InitializeDb();
 
-            navigationStore.CurrentViewModel = host.Services.GetRequiredService<CheckedInListViewModel>();
+            navigationStore.CurrentViewModel = new CheckedInListViewModel(checkInService, navigationStore, CreateMakeOrderCommand);
+            
             MainWindow mainWindow = host.Services.GetRequiredService<MainWindow>();
 
             mainWindow.DataContext= host.Services.GetRequiredService<MainWindowViewModel>();
             mainWindow.Show();
         }
+
+        private ViewModelBase CreateMakeOrderCommand()
+        {
+            return new CheckInCreatorViewModel(orderNumberService, checkInService, navigationStore, CreateCheckedInListViewModel);
+        }
+
+        private ViewModelBase CreateCheckedInListViewModel ()
+        {
+            return new CheckedInListViewModel(checkInService, navigationStore, CreateMakeOrderCommand);
+
+        }
+
         private static void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<App>();
