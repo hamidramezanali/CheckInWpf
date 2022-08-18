@@ -9,9 +9,11 @@ namespace CheckInWpf.ViewModel
     public class CheckInService : ICheckInService
     {
         private readonly IDbService _dbService;
-        public CheckInService(IDbService dbService)
+        private readonly IFileService _fileService;
+        public CheckInService(IDbService dbService,IFileService fileService)
         {
             _dbService = dbService;
+            _fileService = fileService;
         }
         public ObservableCollection<CheckInWrapper> GetAllOrders()
         {
@@ -46,7 +48,11 @@ namespace CheckInWpf.ViewModel
         }
         public void UpdateOrder(CheckIn checkIn)
         {
-            throw new NotImplementedException();
+           _dbService.UpdateOrder(checkIn);
+        }
+        public void SaveAll(List<CheckInWrapper> checkInWrappers)
+        {
+            _fileService.SaveProjectAsEXCEL(checkInWrappers);
         }
     }
 }

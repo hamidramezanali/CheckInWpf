@@ -11,7 +11,39 @@
             <RowDefinition Height="30px"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Button Height="30" Background="Green" Content="{StaticResource MakeNewOrder }" Command="{Binding CreateOrderCommand }"/>
-        <DataGrid IsReadOnly="True"  Grid.Row="1" ItemsSource="{Binding Orders}" AutoGenerateColumns="True" Grid.ColumnSpan="2"/>
+        <StackPanel Orientation="Horizontal" >
+        <Button Height="30" Width="100" Background="Green" Content="{StaticResource MakeNewOrder }" Command="{Binding CreateOrderCommand }"/>
+            <TextBlock Text="{StaticResource FromDate}"/>
+            <ComboBox Width="50" ItemsSource="{Binding Days}"  SelectedItem="{Binding FromDay}"/>
+            <ComboBox Width="50" ItemsSource="{Binding Months}" SelectedItem="{Binding FromMonth}"/>
+            <ComboBox Width="70" ItemsSource="{Binding Years}" SelectedItem="{Binding FromYear}"/>
+            <TextBlock Text="{StaticResource ToDate}"/>
+            <ComboBox Width="50" ItemsSource="{Binding Days}"  SelectedItem="{Binding ToDay}"/>
+            <ComboBox Width="50" ItemsSource="{Binding Months}" SelectedItem="{Binding ToMonth}"/>
+            <ComboBox Width="70" ItemsSource="{Binding Years}" SelectedItem="{Binding ToYear}"/>
+            <Button Height="30" Width="100" Background="LightBlue" Content="{StaticResource Apply }" Command="{Binding ApplyFilterCommand }"/>
+
+            <Button Height="30" Width="100" Background="LightBlue" Content="{StaticResource Apply }" Command="{Binding SaveCommand }"/>
+        </StackPanel>
+        <DataGrid   Grid.Row="1" ItemsSource="{Binding FilteredOrders}" AutoGenerateColumns="False" Grid.ColumnSpan="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="{StaticResource Name}" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="{StaticResource Comments}" Binding="{Binding Comments}" />
+                <DataGridTextColumn Header="{StaticResource OrderNo}" Binding="{Binding OrderNo}" />
+                <DataGridTextColumn Header="{StaticResource Day}" Binding="{Binding Day}" />
+                <DataGridTextColumn Header="{StaticResource Month}" Binding="{Binding Month}" />
+                <DataGridTextColumn Header="{StaticResource Year}" Binding="{Binding Year}" />
+                <DataGridTextColumn Header="{StaticResource Status}" Binding="{Binding Status}" />
+                <DataGridTemplateColumn Header="{StaticResource Delete}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="{StaticResource Delete}"
+                                    Command="{Binding DataContext.DeleteOrderCommand, RelativeSource={RelativeSource FindAncestor , AncestorType={x:Type DataGrid}}}"
+                                    CommandParameter="{Binding}" BorderThickness="0" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

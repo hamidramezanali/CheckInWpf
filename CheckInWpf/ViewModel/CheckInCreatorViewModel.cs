@@ -66,19 +66,18 @@ namespace CheckInWpf.ViewModel
         }
 
 
-        public RelayCommand AddCommand { get; set; }
+        public MakeOrderCommand AddCommand { get; set; }
         public NavigateCommand CancelCommand { get; set; }
         
         private IOrderNumberService _orderNumberService { get; }
-        private ICheckInService _checkInService { get; }
 
 
         public CheckInCreatorViewModel(IOrderNumberService orderNumberService,ICheckInService checkInService,NavigationStore navigationStore, Func<ViewModelBase> createViewModel)
         {
        
-            AddCommand = new RelayCommand(Add);
+            AddCommand = new MakeOrderCommand(this,navigationStore, createViewModel,checkInService,orderNumberService);
             CancelCommand = new NavigateCommand(navigationStore,createViewModel);
-            _checkInService = checkInService;
+ 
             _orderNumberService = orderNumberService;
             Initialize();
          
@@ -90,7 +89,6 @@ namespace CheckInWpf.ViewModel
         {
             DateTime thisDate = DateTime.Now;
             PersianCalendar pc = new PersianCalendar();
-
             Name = String.Empty;
             Comments = String.Empty;
             Day = pc.GetDayOfMonth(thisDate).ToString();
@@ -100,20 +98,8 @@ namespace CheckInWpf.ViewModel
 
         }
 
-        private void Add()
-        {
-            if (string.IsNullOrEmpty(Name))
-            {
-                MessageBox.Show("Please enter the name");
-                return;
-            }
-            _orderNumberService.SetOrderNumber(Convert.ToInt32(_OrderNo));
 
-            _checkInService.AddOrder(NewOrderMapper());
-        
-        }
-
-        private CheckIn NewOrderMapper()
+        public CheckIn NewOrderMapper()
         {
             return new CheckIn()
             {

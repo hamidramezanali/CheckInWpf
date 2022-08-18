@@ -1,5 +1,6 @@
 ﻿using CheckInWpf.Extensions;
 using CheckInWpf.Model;
+using CheckInWpf.ViewModel;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
@@ -90,6 +91,7 @@ namespace CheckInWpf.Service
                 while (reader.Read())
                 {
                     var checkin=new CheckIn();
+                    checkin.ID = reader["ID"].ToString();
                     checkin.Name = reader["Name"].ToString();
                     checkin.Comments = reader["Comments"].ToString();
                     checkin.OrderNo =Convert.ToInt32( reader["OrderNo"].ToString());
@@ -104,16 +106,17 @@ namespace CheckInWpf.Service
 
         }
 
-        public void UpdateOrder(CheckIn order)
-        {
-            throw new NotImplementedException();
-        }
-
         public void AddOrder(CheckIn order)
         {
-
-                sqlCommand = @$"insert into {TableName} (Name ,Comments ,OrderNo ,Day , Month , Year ,Status) values (
+            sqlCommand = @$"insert into {TableName} (Name ,Comments ,OrderNo ,Day , Month , Year ,Status) values (
                              ""{ order.Name}"",""{@order.Comments}"",{@order.OrderNo},""{@order.Day}"",""{@order.Month}"",""{@order.Year}"",""{@order.Status}"")";
+            executeQuery(sqlCommand);
+        }
+
+        public void UpdateOrder(CheckIn order)
+        {
+
+                sqlCommand = @$"UPDATE  {TableName} SET  Status  = ""{@order.Status}"" where ID={order.ID}";
                 executeQuery(sqlCommand);
             
         }

@@ -11,6 +11,9 @@
     <system:String x:Key="Title" >ثبت سفارش</system:String>
     <system:String x:Key="MakeNewOrder" >ثبت سفارش جدید</system:String>
     <system:String x:Key="Cancel" >لغو</system:String>
-    
-
+    <system:String x:Key="FromDate" >از تاریخ</system:String>
+    <system:String x:Key="ToDate" >تا تاریخ</system:String>
+    <system:String x:Key="Apply" >اعمال</system:String>
+    <system:String x:Key="Status" >وضعیت</system:String>
+    <system:String x:Key="Delete" >حذف</system:String>
 </ResourceDictionary>

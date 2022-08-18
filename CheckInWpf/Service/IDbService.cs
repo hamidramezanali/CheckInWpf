@@ -1,4 +1,5 @@
 ﻿using CheckInWpf.Model;
+using CheckInWpf.ViewModel;
 using System.Collections.Generic;
 
 namespace CheckInWpf.Service

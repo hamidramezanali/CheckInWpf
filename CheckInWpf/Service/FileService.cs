@@ -1,4 +1,6 @@
 ﻿using CheckInWpf.Model;
+using CheckInWpf.ViewModel;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -59,5 +61,51 @@ namespace CheckInWpf.Service
             if (!File.Exists(LatestFilePath))
                 WriteInitializer(LatestFilePath);
         }
+
+        public bool SaveProjectAsEXCEL(IEnumerable<CheckInWrapper> checkInWrappers)
+        {
+            try
+            {
+
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "CSV files (*.csv)|*.csv|Text files (*.txt)|*.txt";
+                saveFileDialog.DefaultExt = ".csv";
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    string fileToSave = saveFileDialog.FileName;
+
+                    CSVExporter(checkInWrappers, fileToSave);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
+
+        private void CSVExporter(IEnumerable<CheckInWrapper> checkInWrappers,string filepath)
+        {
+            try
+            {
+                List<string> content = new List<string>();
+
+                foreach (var line in checkInWrappers)
+                {
+                    content.Add(line.ToCSVString());
+                  
+
+                }
+                File.WriteAllLines(filepath, content);
+
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+   
     }
 }
