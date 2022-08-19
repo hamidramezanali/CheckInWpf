@@ -3,15 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:CheckInWpf.View"
+             xmlns:local="clr-namespace:CheckInWpf.View" 
+             xmlns:converter="clr-namespace:CheckInWpf.Converter"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="Button" >
+            <Setter Property="Margin" Value="5,0,5,0"/>
+        </Style>
+        <converter:StatusToSTringConverter x:Key="StatusToSTringConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30px"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" >
+        <StackPanel Orientation="Horizontal"  Margin="10,0,10,0" >
         <Button Height="30" Width="100" Background="Green" Content="{StaticResource MakeNewOrder }" Command="{Binding CreateOrderCommand }"/>
             <TextBlock Text="{StaticResource FromDate}"/>
             <ComboBox Width="50" ItemsSource="{Binding Days}"  SelectedItem="{Binding FromDay}"/>
@@ -23,9 +30,9 @@
             <ComboBox Width="70" ItemsSource="{Binding Years}" SelectedItem="{Binding ToYear}"/>
             <Button Height="30" Width="100" Background="LightBlue" Content="{StaticResource Apply }" Command="{Binding ApplyFilterCommand }"/>
 
-            <Button Height="30" Width="100" Background="LightBlue" Content="{StaticResource Apply }" Command="{Binding SaveCommand }"/>
+            <Button Height="30" Width="100" Background="LightBlue" Content="{StaticResource Export }" Command="{Binding SaveCommand }"/>
         </StackPanel>
-        <DataGrid   Grid.Row="1" ItemsSource="{Binding FilteredOrders}" AutoGenerateColumns="False" Grid.ColumnSpan="2">
+        <DataGrid  Margin="10" Grid.Row="1" ItemsSource="{Binding FilteredOrders}" AutoGenerateColumns="False" Grid.ColumnSpan="2">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{StaticResource Name}" Binding="{Binding Name}" />
                 <DataGridTextColumn Header="{StaticResource Comments}" Binding="{Binding Comments}" />
@@ -33,11 +40,13 @@
                 <DataGridTextColumn Header="{StaticResource Day}" Binding="{Binding Day}" />
                 <DataGridTextColumn Header="{StaticResource Month}" Binding="{Binding Month}" />
                 <DataGridTextColumn Header="{StaticResource Year}" Binding="{Binding Year}" />
-                <DataGridTextColumn Header="{StaticResource Status}" Binding="{Binding Status}" />
+                <DataGridTextColumn Header="{StaticResource Status}" Binding="{Binding Status,Converter={StaticResource StatusToSTringConverter}}" />
                 <DataGridTemplateColumn Header="{StaticResource Delete}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="{StaticResource Delete}"
+                                    Style="{x:Null}"
+                                    Background="#FFA7A7"
                                     Command="{Binding DataContext.DeleteOrderCommand, RelativeSource={RelativeSource FindAncestor , AncestorType={x:Type DataGrid}}}"
                                     CommandParameter="{Binding}" BorderThickness="0" />
                         </DataTemplate>

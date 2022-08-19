@@ -13,7 +13,9 @@
     <system:String x:Key="Cancel" >لغو</system:String>
     <system:String x:Key="FromDate" >از تاریخ</system:String>
     <system:String x:Key="ToDate" >تا تاریخ</system:String>
-    <system:String x:Key="Apply" >اعمال</system:String>
+    <system:String x:Key="Apply" > اعمال فیلتر</system:String>
     <system:String x:Key="Status" >وضعیت</system:String>
     <system:String x:Key="Delete" >حذف</system:String>
+    <system:String x:Key="Export" >ذخیره</system:String>
+    <system:String x:Key="Date" >تاریخ</system:String>
 </ResourceDictionary>
