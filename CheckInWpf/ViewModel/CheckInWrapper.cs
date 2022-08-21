@@ -39,7 +39,7 @@ namespace CheckInWpf.ViewModel
         }
         public string ToCSVString()
         {
-            return  @$" {ID},{ Name},{Comments }, {OrderNo }, {Day}, {Month }, {Year }, {Status}";
+            return $@" {ID},{ Name},{Comments }, {OrderNo }, {Day}, {Month }, {Year }, {Status}";
         }
 
         public bool IsInRange(string FromYear,string FromMonth, string FromDay, string ToYear, string ToMonth, string ToDay)

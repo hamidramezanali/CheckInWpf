@@ -15,7 +15,7 @@ namespace CheckInWpf.Commands
         {
             _checkedInListViewModel = checkedInListViewModel;
         }
-        public override void Execute(object? parameter)
+        public override void Execute(object parameter)
         {
             _checkedInListViewModel.LoadOrders();
             _checkedInListViewModel.ApplyFilter();

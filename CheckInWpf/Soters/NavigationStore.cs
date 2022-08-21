@@ -21,7 +21,8 @@ namespace CheckInWpf.Soters
 
         private void OnCurrentViewModelChanged()
         {
-            CurrentViewModelChanged?.Invoke();
+            if(CurrentViewModelChanged != null)
+            CurrentViewModelChanged.Invoke();
         }
 
         public event Action CurrentViewModelChanged;

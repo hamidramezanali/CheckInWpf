@@ -31,7 +31,7 @@ namespace CheckInWpf.Commands
             _orderNumberService = orderNumberService;
             _checkInCreatorViewModel = checkInCreatorViewModel;
         }
-        public override void Execute(object? parameter)
+        public override void Execute(object parameter)
         {
             if (string.IsNullOrEmpty(_checkInCreatorViewModel.Name))
             {

@@ -11,7 +11,8 @@ namespace CheckInWpf.Extensions
     {
         public static Status ToStatus(this string status)
         {
-            return Enum.Parse<Status>(status);
+            var Success= Enum.TryParse<Status>(status,out Status result);
+            return result;
         }
     }
 }

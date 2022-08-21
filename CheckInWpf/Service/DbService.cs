@@ -73,7 +73,7 @@ namespace CheckInWpf.Service
 
         public bool checkIfTableContainsData(string tableName)
         {
-            command.CommandText = @$"SELECT count(*) FROM  {TableName} ";
+            command.CommandText = $@"SELECT count(*) FROM  {TableName} ";
             var result = command.ExecuteScalar();
 
             return Convert.ToInt32(result) > 0 ? true : false;
@@ -84,7 +84,7 @@ namespace CheckInWpf.Service
 
         public IEnumerable<CheckIn> GetAllOrders()
         {
-            command.CommandText= @$"SELECT * FROM {TableName}" ;  
+            command.CommandText= $@"SELECT * FROM {TableName}" ;  
             List<CheckIn> checkIns=new List<CheckIn>();
             using (var reader = command.ExecuteReader())
             {
@@ -108,7 +108,7 @@ namespace CheckInWpf.Service
 
         public void AddOrder(CheckIn order)
         {
-            sqlCommand = @$"insert into {TableName} (Name ,Comments ,OrderNo ,Day , Month , Year ,Status) values (
+            sqlCommand = $@"insert into {TableName} (Name ,Comments ,OrderNo ,Day , Month , Year ,Status) values (
                              ""{ order.Name}"",""{@order.Comments}"",{@order.OrderNo},""{@order.Day}"",""{@order.Month}"",""{@order.Year}"",""{@order.Status}"")";
             executeQuery(sqlCommand);
         }
@@ -116,7 +116,7 @@ namespace CheckInWpf.Service
         public void UpdateOrder(CheckIn order)
         {
 
-                sqlCommand = @$"UPDATE  {TableName} SET  Status  = ""{@order.Status}"" where ID={order.ID}";
+                sqlCommand = $@"UPDATE  {TableName} SET  Status  = ""{@order.Status}"" where ID={order.ID}";
                 executeQuery(sqlCommand);
             
         }

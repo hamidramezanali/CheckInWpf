@@ -19,7 +19,7 @@ namespace CheckInWpf.Commands
             _navigationStore = navigationStore;
             _createViewModel = createViewModel;
         }
-        public override void Execute(object? parameter)
+        public override void Execute(object parameter)
         {
             _navigationStore.CurrentViewModel = _createViewModel();
         }

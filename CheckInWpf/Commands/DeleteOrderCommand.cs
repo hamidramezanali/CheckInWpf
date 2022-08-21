@@ -18,8 +18,9 @@ namespace CheckInWpf.Commands
             _checkInService = checkInService;
             _checkedInListViewModel = checkedInListViewModel;
         }
-        public override void Execute(object? parameter)
+        public override void Execute(object parameter)
         {
+            if (parameter == null) return;
             CheckIn order = ((CheckInWrapper)parameter).ToCheckIn();
             order.Status = Status.Deleted;
 
