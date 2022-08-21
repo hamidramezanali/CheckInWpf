@@ -1,7 +1,7 @@
 ﻿using CheckInWpf.Commands;
 using CheckInWpf.Model;
 using CheckInWpf.Service;
-using CheckInWpf.Soters;
+using CheckInWpf.Store;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;

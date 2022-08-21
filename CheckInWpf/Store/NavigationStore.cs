@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CheckInWpf.Soters
+namespace CheckInWpf.Store
 {
     public class NavigationStore
     {

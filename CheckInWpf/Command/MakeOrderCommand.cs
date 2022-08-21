@@ -1,5 +1,5 @@
 ﻿using CheckInWpf.Service;
-using CheckInWpf.Soters;
+using CheckInWpf.Store;
 using CheckInWpf.ViewModel;
 using GalaSoft.MvvmLight;
 using System;
