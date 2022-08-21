@@ -18,10 +18,10 @@
             <Setter Property="Height" Value="30"/>
         </Style>
         <DataTemplate DataType="{x:Type vms:CheckInCreatorViewModel}">
-            <views:CheckInCreatorView/>
+            <views:CheckInCreatorView LoadCommand="{Binding LoadOrderNumberCommand}"/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vms:CheckedInListViewModel}">
-            <views:CheckedInListView/>
+            <views:CheckedInListView LoadCommand="{Binding LoadListCommand}"/>
         </DataTemplate>
     </Window.Resources>
     <ContentControl Margin="10" Content="{Binding CurrentViewModel}"/>

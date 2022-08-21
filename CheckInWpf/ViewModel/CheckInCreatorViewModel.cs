@@ -68,6 +68,7 @@ namespace CheckInWpf.ViewModel
 
         public MakeOrderCommand AddCommand { get; set; }
         public NavigateCommand CancelCommand { get; set; }
+        public LoadOrderNumberCommand LoadOrderNumberCommand { get; set; }
         
         private IOrderNumberService _orderNumberService { get; }
 
@@ -77,15 +78,14 @@ namespace CheckInWpf.ViewModel
        
             AddCommand = new MakeOrderCommand(this,navigationStore, createViewModel,checkInService,orderNumberService);
             CancelCommand = new NavigateCommand(navigationStore,createViewModel);
- 
+            LoadOrderNumberCommand=new LoadOrderNumberCommand(this);
             _orderNumberService = orderNumberService;
-            Initialize();
-         
+            
         }
 
 
 
-        private void Initialize()
+        public void Initialize()
         {
             DateTime thisDate = DateTime.Now;
             PersianCalendar pc = new PersianCalendar();

@@ -20,9 +20,30 @@ namespace CheckInWpf.View
     /// </summary>
     public partial class CheckInCreatorView : UserControl
     {
+
+
+        public ICommand LoadCommand
+        {
+            get { return (ICommand)GetValue(LoadCommandProperty); }
+            set { SetValue(LoadCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for LoadCommand.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty LoadCommandProperty =
+            DependencyProperty.Register("LoadCommand", typeof(ICommand), typeof(CheckInCreatorView), new PropertyMetadata(null));
+
+
         public CheckInCreatorView()
         {
             InitializeComponent();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if(LoadCommand != null)
+            {
+                LoadCommand.Execute(null);
+            }
         }
     }
 }

@@ -14,15 +14,36 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace CheckInWpf.View
-{
+{ 
+
     /// <summary>
     /// Interaction logic for CheckedInListView.xaml
     /// </summary>
     public partial class CheckedInListView : UserControl
     {
+
+        public ICommand LoadCommand
+        {
+            get { return (ICommand)GetValue(LoadCommandProperty); }
+            set { SetValue(LoadCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for LoadCommand.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty LoadCommandProperty =
+            DependencyProperty.Register("LoadCommand", typeof(ICommand), typeof(CheckedInListView), new PropertyMetadata(null));
+
+
         public CheckedInListView()
         {
             InitializeComponent();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if(LoadCommand != null)
+            {
+                LoadCommand.Execute(null);
+            }
         }
     }
 }

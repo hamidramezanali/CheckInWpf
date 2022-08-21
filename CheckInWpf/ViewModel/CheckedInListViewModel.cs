@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace CheckInWpf.ViewModel
 {
@@ -82,6 +83,8 @@ namespace CheckInWpf.ViewModel
         public NavigateCommand CreateOrderCommand { get; set; }
         public ApplyFilterCommand ApplyFilterCommand { get; set; }
         public DeleteOrderCommand DeleteOrderCommand { get; set; }
+        public LoadListCommand LoadListCommand { get; set; }
+        public ICommand LoadValues { get; set; }
         public RelayCommand SaveCommand { get; set; }
         public CheckedInListViewModel(ICheckInService checkInService, NavigationStore navigationStore, Func<ViewModelBase> createViewModel)
         {
@@ -89,8 +92,9 @@ namespace CheckInWpf.ViewModel
             CreateOrderCommand = new NavigateCommand(navigationStore, createViewModel);
             ApplyFilterCommand = new ApplyFilterCommand(this);
             DeleteOrderCommand = new DeleteOrderCommand(checkInService,this);
+            LoadListCommand = new LoadListCommand(this);
             SaveCommand = new RelayCommand(OnSave);
-            InitializeTheViewModel();
+          
         }
 
         private void OnSave()
