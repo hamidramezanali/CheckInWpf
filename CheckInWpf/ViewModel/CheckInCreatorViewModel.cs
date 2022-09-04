@@ -23,7 +23,12 @@ namespace CheckInWpf.ViewModel
         public string Name
         {
             get { return _Name; }
-            set { _Name = value; RaisePropertyChanged(); }
+            set { 
+                _Name = value;
+                if (string.IsNullOrEmpty(_Name))
+                    _ErrorViewModel.AddError(nameof(Name), "Name should not be empty");
+                RaisePropertyChanged();
+            }
         }
 
         private string _Comments;
@@ -65,12 +70,15 @@ namespace CheckInWpf.ViewModel
             set { _Year = value; RaisePropertyChanged(); }
         }
 
-
+        private readonly ErrorViewModel _ErrorViewModel;
         public MakeOrderCommand AddCommand { get; set; }
         public NavigateCommand CancelCommand { get; set; }
         public LoadOrderNumberCommand LoadOrderNumberCommand { get; set; }
+
+        public bool CanAdd => !_ErrorViewModel.HasErrors;
         
         private IOrderNumberService _orderNumberService { get; }
+
 
 
         public CheckInCreatorViewModel(IOrderNumberService orderNumberService,ICheckInService checkInService,NavigationStore navigationStore, Func<ViewModelBase> createViewModel)
@@ -79,6 +87,7 @@ namespace CheckInWpf.ViewModel
             AddCommand = new MakeOrderCommand(this,navigationStore, createViewModel,checkInService,orderNumberService);
             CancelCommand = new NavigateCommand(navigationStore,createViewModel);
             LoadOrderNumberCommand=new LoadOrderNumberCommand(this);
+            _ErrorViewModel = new ErrorViewModel();
             _orderNumberService = orderNumberService;
             
         }

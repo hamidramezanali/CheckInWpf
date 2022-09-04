@@ -5,22 +5,45 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CheckInWpf.View"
              mc:Ignorable="d" 
-             d:DesignHeight="150" d:DesignWidth="800"
-             Loaded="UserControl_Loaded">
+             d:DesignHeight="150" d:DesignWidth="800">
     <UserControl.Resources>
+        <Style TargetType="TextBox" >
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="BorderBrush" Value="AliceBlue"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="TextAlignment" Value="Left" />
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="0,5,0,0" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <!--<Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <StackPanel>
+                            <Border Padding="{TemplateBinding Padding}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                                <ItemsControl ItemsSource="{TemplateBinding Validation.Errors}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate >
+                                            <TextBlock Foreground="Red" Text="{Binding ErrorContent}"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Border>
+                        </StackPanel>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>-->
+        </Style>
         <Style TargetType="TextBlock">
             <Setter Property="Height" Value="30"/>
             <Setter Property="TextAlignment" Value="Left" />
             <Setter Property="Height" Value="30"/>
             <Setter Property="Margin" Value="0,5,0,0" />
         </Style>
-        <Style TargetType="TextBox">
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="TextAlignment" Value="Left" />
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="Margin" Value="0,5,0,0" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-        </Style>
+
         <Style TargetType="Button">
             <Setter Property="Height" Value="30"/>
             <Setter Property="Height" Value="30"/>
@@ -67,17 +90,23 @@
                 <TextBlock Grid.Column="1"  Text="{Binding Day}"/>
                 <TextBlock Grid.Column="2"   Text="{Binding Month}"/>
                 <TextBlock Grid.Column="3"   Text="{Binding Year}"/>
-        </Grid>
+            </Grid>
 
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button  Content="{StaticResource Add}" Command="{Binding AddCommand}"/>
+                <Button  Content="{StaticResource Add}" Command="{Binding AddCommand}" IsEnabled="{Binding CanAdd}"/>
                 <Button  Grid.Column="1" Content="{StaticResource Cancel}" Command="{Binding CancelCommand}"/>
             </Grid>
+            <ItemsControl x:Name="ErrorDisplay"
+                Background="AntiqueWhite"
+                Foreground="Red"
+                ItemsSource="{Binding RelativeSource={RelativeSource Self},
+                                      Path=(Validation.ValidationAdornerSiteFor).(Validation.Errors)}"
+                DisplayMemberPath="ErrorContent" />
         </StackPanel>
-    
+
     </Grid>
 </UserControl>

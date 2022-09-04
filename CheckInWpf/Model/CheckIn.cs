@@ -9,21 +9,8 @@ namespace CheckInWpf.Model
 {
     public class CheckIn
     {
-        public CheckIn()
-        {
-        }
 
-        //public CheckIn(string order)
-        //{
-        //    var newCheckin = order.Split("\t");
-        //    Name = newCheckin[0];
-        //    OrderNo =Convert.ToInt32( newCheckin[1]);
-        //    Day = newCheckin[2];
-        //    Month = newCheckin[3];
-        //    Year = newCheckin[4];
-        //    Comments = newCheckin[5];
-        //    Status = newCheckin[6].ToStatus();
-        //}
+
         public string ID { get; set; }
         public string Name { get; set; }
         public int OrderNo { get; set; }
